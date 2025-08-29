@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Routes, Route, useLocation, Link } from 'react-router-dom'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, Environment, ScrollControls, Text } from '@react-three/drei'
 import * as THREE from 'three'
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing'
@@ -17,7 +17,7 @@ const palette = { bg:'#0b0b12', rose:'#f5b7c8', blush:'#ffd6df', champagne:'#fff
 const i18n: Record<Lang, any> = {
   lt:{ hero:{sub:'Ateities grožio sistema: 3D erdvė, švelnūs gradientai ir intuityvūs judesiai.'}, buttons:['Portfelis','Parduotuvė','Mokymai','Kontaktai'] },
   en:{ hero:{sub:'Future-ready beauty system: 3D space, silky gradients and intuitive motion.'}, buttons:['Portfolio','Shop','Training','Contacts'] },
-  ru:{ hero:{sub:'Система будущего: 3D‑пространство, мягкие градиенты и умные анимации.'}, buttons:['Портфолио','Магазин','Обучение','Контакты'] },
+  ru:{ hero:{sub:'Система будущего: 3D-пространство, мягкие градиенты и умные анимации.'}, buttons:['Портфолио','Магазин','Обучение','Контакты'] },
 }
 function Language({lang,setLang}:{lang:Lang,setLang:(l:Lang)=>void}){
   const langs:Lang[] = ['lt','en','ru']
