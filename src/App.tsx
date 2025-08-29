@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { Routes, Route, useLocation, Link } from 'react-router-dom'
 import { Canvas } from '@react-three/fiber'
-import { Float, Environment, ScrollControls, Text } from '@react-three/drei'
+import { Environment, ScrollControls } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing'
 import { motion, AnimatePresence } from 'framer-motion'
 import GlassButton from './components/GlassButton'
@@ -12,12 +12,12 @@ import Contacts from './pages/Contacts'
 
 type Lang = 'lt' | 'en' | 'ru'
 
-const palette = { bg:'#0b0b12', rose:'#f5b7c8', outline:'#ffe2ea' }
+const palette = { bg:'#000000' } // чистый чёрный для совместимости с логотипом
 
 const i18n: Record<Lang, any> = {
-  lt:{ hero:{sub:'Ateities grožio sistema: 3D erdvė, švelnūs gradientai ir intuityvūs judesiai.'}, buttons:['Portfelis','Parduotuvė','Mokymai','Kontaktai'] },
-  en:{ hero:{sub:'Future-ready beauty system: 3D space, silky gradients and intuitive motion.'}, buttons:['Portfolio','Shop','Training','Contacts'] },
-  ru:{ hero:{sub:'Система будущего: 3D-пространство, мягкие градиенты и умные анимации.'}, buttons:['Портфолио','Магазин','Обучение','Контакты'] },
+  lt:{ hero:{sub:'Ateities grožio sistema: 3D erdvė, švelnūs efektai ir intuityvūs judesiai.'}, buttons:['Portfelis','Parduotuvė','Mokymai','Kontaktai'] },
+  en:{ hero:{sub:'Future‑ready beauty system: depth, soft motion and polymer UI.'}, buttons:['Portfolio','Shop','Training','Contacts'] },
+  ru:{ hero:{sub:'Система будущего: глубина, мягкие анимации и полимерные кнопки.'}, buttons:['Портфолио','Магазин','Обучение','Контакты'] },
 }
 
 function Language({lang,setLang}:{lang:Lang,setLang:(l:Lang)=>void}){
@@ -37,13 +37,13 @@ function Language({lang,setLang}:{lang:Lang,setLang:(l:Lang)=>void}){
 function Scene(){
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight intensity={1.0} position={[4,6,6]} />
+      <ambientLight intensity={0.5} />
+      <directionalLight intensity={0.9} position={[4,6,6]} />
       <Environment preset='city' />
-      <Title />
+      {/* Пост‑эффекты для мягкой глубины */}
       <EffectComposer>
-        <Bloom intensity={0.6} luminanceThreshold={0.18} luminanceSmoothing={0.55} />
-        <Noise opacity={0.015}/>
+        <Bloom intensity={0.5} luminanceThreshold={0.2} luminanceSmoothing={0.6} />
+        <Noise opacity={0.01}/>
         <Vignette eskil={false} offset={0.18} darkness={0.5}/>
       </EffectComposer>
     </>
@@ -54,16 +54,7 @@ function Home({lang}:{lang:Lang}){
   const copy = i18n[lang]
   return (
     <div className='relative min-h-screen'>
-      {/* Background gradients */}
-      <div className='fixed inset-0 -z-10'>
-        <div className='absolute inset-0 bg-gradient-to-b from-[#0b0b12] via-[#0f0e14] to-[#0b0b12]' />
-        <div className='absolute -top-1/3 left-1/2 -translate-x-1/2 w-[120vmax] h-[120vmax] rounded-full opacity-35 blur-3xl'
-             style={{background:'radial-gradient(circle at 50% 50%, #ffd6df 0%, transparent 60%)'}}/>
-        <div className='absolute top-1/2 right-0 w-[60vmax] h-[60vmax] rounded-full opacity-20 blur-3xl'
-             style={{background:'radial-gradient(circle at 50% 50%, #fff1c9 0%, transparent 60%)'}}/>
-      </div>
-
-      {/* 3D Canvas without shards & photo */}
+      {/* 3D Canvas на чистом чёрном фоне */}
       <div className='fixed inset-0 -z-0'>
         <Canvas camera={{ position:[0,0,8], fov:45 }}>
           <color attach='background' args={[palette.bg]} />
@@ -78,7 +69,7 @@ function Home({lang}:{lang:Lang}){
       {/* UI Overlay */}
       <div className='relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-6'>
         <img src='/iz-logo.svg' className='w-44 md:w-56 mb-4 opacity-90' alt='logo' />
-        <p className='max-w-2xl text-white/80 mb-8'>{copy.hero.sub}</p>
+        <p className='max-w-2xl text-white/70 mb-8'>{copy.hero.sub}</p>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
           <GlassButton label={copy.buttons[0]} to='/portfolio' />
           <GlassButton label={copy.buttons[1]} to='/shop' delay={0.05} />
