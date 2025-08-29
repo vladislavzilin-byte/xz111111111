@@ -34,16 +34,6 @@ function Language({lang,setLang}:{lang:Lang,setLang:(l:Lang)=>void}){
   )
 }
 
-function Title(){
-  return (
-    <Float speed={0.9} rotationIntensity={0.15} floatIntensity={0.5}>
-      <Text fontSize={1.2} anchorX='center' anchorY='middle' outlineWidth={0.03} outlineColor={palette.outline} color={palette.rose} fillOpacity={0}>
-        IRINA ZILINA HAIR TREND
-      </Text>
-    </Float>
-  )
-}
-
 function Scene(){
   return (
     <>
