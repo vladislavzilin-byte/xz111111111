@@ -10,6 +10,9 @@ export default function Portfolio(){return(<div className='min-h-screen bg-gradi
     <div class="wrapper">
         <form action="">
             <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" placeholder="Username" required>
+                </div>
         </form>
     </div>
 </body>
